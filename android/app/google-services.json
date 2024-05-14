@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "733353250714",
+    "project_id": "hotcontrol-c90f4",
+    "storage_bucket": "hotcontrol-c90f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733353250714:android:48c6e456481730b7adf423",
+        "android_client_info": {
+          "package_name": "com.example.hot_control"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtRLTbZArVGiSkHEcIhS-61fvmI3BjScQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
