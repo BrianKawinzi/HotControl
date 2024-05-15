@@ -59,13 +59,13 @@ class _OrderPageState extends State<OrderPage> {
 
             //user input -> quantity
             TextField(
-              controller: storeController,
+              controller: quantityController,
               decoration: const InputDecoration(hintText: 'Quantity'),
             ),
 
             //user input -> state
             TextField(
-              controller: storeController,
+              controller: stateController,
               decoration: const InputDecoration(hintText: 'State'),
             ),
           ],
