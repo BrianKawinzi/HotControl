@@ -101,7 +101,7 @@ class RegPage extends StatelessWidget {
                 //password textfield
                 PasswordTf(
                   controller: passwordController, 
-                  hintText: 'Confirm Password'
+                  hintText: 'Enter Password'
                 ),
 
 

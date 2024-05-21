@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hot_control/multi_pages/dept_reg.dart';
 import 'package:hot_control/pages/bottom_nav.dart';
 
 class OutletPage extends StatelessWidget {
@@ -117,6 +118,9 @@ class OutletPage extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () {
                           // Add your logic for when the button is pressed
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return const DeptReg();
+                          }));
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Colors.black, // Background color
