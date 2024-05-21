@@ -49,8 +49,8 @@ class _BottomNavState extends State<BottomNav> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color.fromARGB(255, 0, 0, 0),
-        unselectedItemColor: Color.fromARGB(255, 132, 126, 119),
+        selectedItemColor: const Color.fromARGB(255, 0, 0, 0),
+        unselectedItemColor: const Color.fromARGB(255, 132, 126, 119),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard, color: _currentIndex == 0 ? const Color.fromARGB(255, 0, 0, 0) : const Color.fromARGB(239, 84, 81, 76)),

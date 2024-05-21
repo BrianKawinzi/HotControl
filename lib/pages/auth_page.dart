@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hot_control/pages/bottom_nav.dart';
+import 'package:hot_control/multi_pages/bottom_multi.dart';
+
 
 import 'package:hot_control/pages/intro_page.dart';
 
@@ -16,7 +17,7 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           //user is logged in
           if (snapshot.hasData) {
-            return const BottomNav(); //later change to bottom navigation
+            return const BottomMulti(); //later change to bottom navigation
           }
 
           //user is not logged in

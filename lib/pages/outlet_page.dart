@@ -1,9 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hot_control/multi_pages/dept_reg.dart';
 import 'package:hot_control/pages/bottom_nav.dart';
 
 class OutletPage extends StatelessWidget {
   const OutletPage({super.key});
+
+  //register selection method
+  Future<void> _registerSelection(String accountType) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    if (user != null) {
+      await firestore.collection('user-selections').doc(user.uid).set({
+        'account_type': accountType,
+        'timeStamp': FieldValue.serverTimestamp(),
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +77,10 @@ class OutletPage extends StatelessWidget {
                       ),
 
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // Add your logic for when the button is pressed
+                          await _registerSelection('single');
+                          // ignore: use_build_context_synchronously
                           Navigator.push(context, MaterialPageRoute(
                             builder: (context) {
                               return  const BottomNav();
@@ -71,6 +89,7 @@ class OutletPage extends StatelessWidget {
                         );
                         },
                         style: ElevatedButton.styleFrom(
+                          // ignore: deprecated_member_use
                           primary: Colors.black, // Background color
                         ),
                         child: const Text(
@@ -116,13 +135,15 @@ class OutletPage extends StatelessWidget {
                       ),
 
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // Add your logic for when the button is pressed
+                          await _registerSelection('multi');
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return const DeptReg();
                           }));
                         },
                         style: ElevatedButton.styleFrom(
+                          // ignore: deprecated_member_use
                           primary: Colors.black, // Background color
                         ),
                         child: const Text(
