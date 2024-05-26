@@ -55,14 +55,24 @@ class _InventoryMultiState extends State<InventoryMulti> {
           'bp': doc['bp'],
           'sp': doc['sp'],
           'quantities': doc['quantities'],
+          'departmentId': doc['departmentId'],
         };
       }).toList();
     });
   }
 
-  void _addInventory(String name, double bp, double sp, int quantities) {
+  Future<void> _addInventory(String name, double bp, double sp, int quantities) async {
+    final docRef = await _firestore.collection('inventory').add({
+      'name': name,
+      'bp': bp,
+      'sp': sp,
+      'quantities': quantities,
+      'departmentId': selectedDepartmentId,
+    });
+
     setState(() {
       inventory.add({
+        'id': docRef.id,
         'name': name,
         'bp': bp,
         'sp': sp,
@@ -72,7 +82,7 @@ class _InventoryMultiState extends State<InventoryMulti> {
     });
   }
 
-  void _saveInventory() async {
+  Future<void> _saveInventory() async {
     for (var item in inventory) {
       if (item.containsKey('id')) {
         await _firestore.collection('inventory').doc(item['id']).update(item);
@@ -83,7 +93,7 @@ class _InventoryMultiState extends State<InventoryMulti> {
     Navigator.pop(context);
   }
 
-  void _deleteInventory(int index) async {
+  Future<void> _deleteInventory(int index) async {
     if (inventory[index].containsKey('id')) {
       await _firestore.collection('inventory').doc(inventory[index]['id']).delete();
     }

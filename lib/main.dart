@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:hot_control/database/order_database.dart';
+import 'package:hot_control/multi_pages/pos_multi.dart';
 import 'package:hot_control/pages/auth_page.dart';
+import 'package:hot_control/pages/log_waiter.dart';
 import 'package:hot_control/pages/login_page.dart';
 import 'package:hot_control/pages/outlet_page.dart';
 import 'package:hot_control/pages/register_page.dart';
+import 'package:hot_control/multi_pages/bottom_multi.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
@@ -44,6 +47,9 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LogPage(),
         '/register': (context) => RegPage(),
         '/outlet': (context) => const OutletPage(),
+        '/waitLog': (context) => const LoginWaiterPage(),
+        '/pos': (context) => const PosMulti(),
+        '/multi': (context) => const BottomMulti(),
       },
     );
   }

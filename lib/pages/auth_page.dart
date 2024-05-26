@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hot_control/multi_pages/bottom_multi.dart';
+import 'package:hot_control/pages/authentication_page.dart';
 
 
 import 'package:hot_control/pages/intro_page.dart';
@@ -22,7 +23,7 @@ class AuthPage extends StatelessWidget {
 
           //user is not logged in
           else {
-            return const IntroPage();
+            return const AuthenticationPage();
           }
         },
       ),
