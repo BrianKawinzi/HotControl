@@ -213,7 +213,7 @@ class _ExpenseMultiState extends State<ExpenseMulti> {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(expenses[index]['name']),
-                  subtitle: Text('Amount: \$${expenses[index]['amount']}'),
+                  subtitle: Text('Amount: \KSH ${expenses[index]['amount']}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

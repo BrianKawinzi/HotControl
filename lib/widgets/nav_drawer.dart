@@ -72,7 +72,7 @@ class NavDrawer extends StatelessWidget {
   void _handleLogout(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signOut();
-      Navigator.of(context).pushReplacementNamed('/login');
+      Navigator.of(context).pushReplacementNamed('/logout');
     } catch (e) {
       print('Error during logout: $e');
     }
