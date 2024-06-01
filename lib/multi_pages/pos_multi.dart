@@ -56,15 +56,22 @@ class _POSMultiState extends State<POSMulti> {
       'items': cart,
       'total': total,
       'status': 'pending',
+      'timestamp': Timestamp.now(),  // Add a timestamp field to record when the sale was made
     };
 
+    // Add the order to the 'orders' collection
     await _firestore.collection('orders').add(newOrder);
+
+    // Add the sale to the 'sales-history' collection
+    await _firestore.collection('sales-history').add(newOrder);
+
     setState(() {
       cart.clear();
       total = 0.0;
     });
+
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Order Created Successfully')),
+      const SnackBar(content: Text('Sales Completed Successfully')),
     );
   }
 
