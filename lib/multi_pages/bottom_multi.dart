@@ -17,7 +17,7 @@ class _BottomMultiState extends State<BottomMulti> {
 
   final List<Widget>_pages = [
     const HomeMulti(),
-    const PosMulti(),
+    const POSMulti(),
     const GeneralMulti(),
     const ReportMulti(),
     const ProfileMulti(),

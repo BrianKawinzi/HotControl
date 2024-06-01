@@ -70,6 +70,13 @@ class _InventoryMultiState extends State<InventoryMulti> {
       'departmentId': selectedDepartmentId,
     });
 
+    await _firestore.collection('menu_items').add({
+      'name': name,
+      'price': sp,
+      'quantities': quantities,
+      'departmentId': selectedDepartmentId,
+    });
+
     setState(() {
       inventory.add({
         'id': docRef.id,

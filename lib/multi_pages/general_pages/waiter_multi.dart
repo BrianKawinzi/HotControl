@@ -133,178 +133,119 @@ class _WaiterMultiState extends State<WaiterMulti> {
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(hintText: 'Name'),
+              decoration: const InputDecoration(hintText: 'Waiter Name'),
             ),
             TextField(
               controller: passcodeController,
-              decoration: const InputDecoration(hintText: '4-Digit Passcode'),
-              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(hintText: 'Waiter Passcode'),
             ),
             DropdownButtonFormField<String>(
               value: selectedDepartmentId,
-              items: departments
-                  .map<DropdownMenuItem<String>>((dept) => DropdownMenuItem<String>(
-                        value: dept['id'],
-                        child: Text(dept['name']),
-                      ))
-                  .toList(),
+              items: departments.map((department) {
+                return DropdownMenuItem<String>(
+                  value: department['id'],
+                  child: Text(department['name']),
+                );
+              }).toList(),
               onChanged: (value) {
                 setState(() {
                   selectedDepartmentId = value;
-                  selectedDepartmentName = departments.firstWhere((dept) => dept['id'] == value)['name'];
+                  selectedDepartmentName = departments
+                      .firstWhere((dept) => dept['id'] == value)['name'];
                 });
               },
-              decoration: const InputDecoration(hintText: 'Department'),
+              decoration: const InputDecoration(hintText: 'Select Department'),
             ),
           ],
         ),
         actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              if (nameController.text.isNotEmpty &&
-                  passcodeController.text.isNotEmpty &&
-                  selectedDepartmentId != null) {
-                if (index == null) {
-                  await _addWaiter(
-                    nameController.text,
-                    passcodeController.text,
-                    selectedDepartmentId!,
-                    selectedDepartmentName!,
-                  );
-                } else {
-                  await _editWaiter(
-                    index,
-                    nameController.text,
-                    passcodeController.text,
-                    selectedDepartmentId!,
-                    selectedDepartmentName!,
-                  );
-                }
-                nameController.clear();
-                passcodeController.clear();
-                Navigator.pop(context);
-              }
-            },
-            child: const Text('Save'),
-          ),
+          _cancelButton(),
+          _saveButton(index),
         ],
       ),
     );
   }
 
-  // Show login dialog
-  void _showLoginDialog(Function onSuccess) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Admin Login'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(hintText: 'Email'),
-            ),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(hintText: 'Password'),
-              obscureText: true,
-            ),
-          ],
-        ),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              try {
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: emailController.text,
-                  password: passwordController.text,
-                );
-                Navigator.pop(context);
-                onSuccess();
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found') {
-                  _showErrorMessage('User not found');
-                } else if (e.code == 'wrong-password') {
-                  _showErrorMessage('Wrong password');
-                }
-              }
-            },
-            child: const Text('Login'),
-          ),
-        ],
-      ),
+  Widget _saveButton(int? index) {
+    return ElevatedButton(
+      onPressed: () {
+        if (nameController.text.isNotEmpty &&
+            passcodeController.text.isNotEmpty &&
+            selectedDepartmentId != null) {
+          if (index == null) {
+            _addWaiter(nameController.text, passcodeController.text,
+                selectedDepartmentId!, selectedDepartmentName!);
+          } else {
+            _editWaiter(
+                index,
+                nameController.text,
+                passcodeController.text,
+                selectedDepartmentId!,
+                selectedDepartmentName!);
+          }
+          Navigator.pop(context);
+        }
+      },
+      child: const Text('Save'),
     );
   }
 
-  void _showErrorMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(message),
-        actions: [
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
+  Widget _cancelButton() {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: const Text('Cancel'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _showAddWaiterDialog();
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.black,
+        ),
+      ),
       appBar: AppBar(
-        title: const Text('Waiters'),
+        title: const Text(
+          'Waiters',
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(233, 0, 0, 0),
+        elevation: 10.0,
       ),
       body: ListView.builder(
         itemCount: waiters.length,
         itemBuilder: (context, index) {
           return ListTile(
-            title: Text(waiters[index]['name']),
-            subtitle: Text('Department: ${waiters[index]['departmentName']}'),
+            title: Text(waiters[index]['name'] ?? ''),
+            subtitle: Text('Passcode: ${waiters[index]['passcode']} \nDepartment: ${waiters[index]['departmentName']}'),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.settings, color: Colors.blue),
                   onPressed: () {
-                    _showLoginDialog(() => _showAddWaiterDialog(index: index));
+                    _showAddWaiterDialog(index: index);
                   },
+                  icon: const Icon(Icons.settings, color: Colors.blue),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
                   onPressed: () {
-                    _showLoginDialog(() => _deleteWaiter(index));
+                    _deleteWaiter(index);
                   },
+                  icon: const Icon(Icons.delete, color: Colors.red),
                 ),
               ],
             ),
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddWaiterDialog(),
-        child: const Icon(Icons.add),
       ),
     );
   }

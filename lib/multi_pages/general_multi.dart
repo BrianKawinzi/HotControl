@@ -7,6 +7,7 @@ import 'package:hot_control/multi_pages/general_pages/department_multi.dart';
 import 'package:hot_control/multi_pages/general_pages/expense_multi.dart';
 import 'package:hot_control/multi_pages/general_pages/inventory_multi.dart';
 import 'package:hot_control/multi_pages/general_pages/order_multi.dart';
+import 'package:hot_control/multi_pages/general_pages/sales_history.dart';
 import 'package:hot_control/multi_pages/general_pages/waiter_multi.dart';
 import 'package:hot_control/widgets/nav_drawer.dart';
 
@@ -61,6 +62,10 @@ class _GeneralMultiState extends State<GeneralMulti> {
       case 'Waiter':
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const WaiterMulti()));
+          break;
+      case 'History':
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const SalesHistory()));
           break;
       default:
         Navigator.of(context).push(MaterialPageRoute(
@@ -143,6 +148,10 @@ class _GeneralMultiState extends State<GeneralMulti> {
           GestureDetector(
             onTap: () => navigateToTile(context, "Waiter"),
             child: buildTile("Waiters", Icons.person),
+          ),
+          GestureDetector(
+            onTap: () => navigateToTile(context, "History"),
+            child: buildTile("Sales History", Icons.architecture),
           ),
 
         ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hot_control/multi_pages/pos_multi.dart';
 import 'package:hot_control/pages/general_page.dart';
 import 'package:hot_control/pages/home_page.dart';
-import 'package:hot_control/pages/pos_page.dart';
+
 import 'package:hot_control/pages/profile_page.dart';
 import 'package:hot_control/pages/report_page.dart';
 
@@ -17,7 +18,7 @@ class _BottomNavState extends State<BottomNav> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const PosPage(),
+    const POSMulti(),
     const GeneralPage(),
     const ReportPage(),
     const ProfilePage(),
